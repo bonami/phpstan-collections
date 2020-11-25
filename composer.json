@@ -1,0 +1,57 @@
+{
+  "name": "bonami/phpstan-collections",
+  "type": "library",
+  "description": "Phpstan extension for bonami/collections library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jan Machala",
+      "email": "jan.machala125@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2|^8.0",
+    "phpstan/phpstan": "^0.12"
+  },
+  "require-dev": {
+    "ergebnis/composer-normalize": "^2.0.2",
+    "phpunit/phpunit": "^9.4.2",
+    "slevomat/coding-standard": "^6.4.1",
+    "squizlabs/php_codesniffer": "^3.5.0"
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "": [
+        "src",
+        "tests"
+      ]
+    }
+  },
+  "scripts": {
+    "phpstan": [
+      "bin/phpstan --ansi analyse -c phpstan.neon"
+    ],
+    "phpunit": [
+      "bin/phpunit --colors=always"
+    ],
+    "phpcs": [
+      "bin/phpcs --standard=./ruleset.xml --extensions=php --tab-width=4 -sp ./src ./tests"
+    ],
+    "phpcbf": [
+      "bin/phpcbf --standard=./ruleset.xml --extensions=php --tab-width=4 -sp ./src ./tests"
+    ],
+    "test": [
+      "@phpunit",
+      "@phpstan",
+      "@phpcs"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+parameters:
+	inferPrivatePropertyTypeFromConstructor: true
+	reportUnmatchedIgnoredErrors: true
+	level: 8
+	paths:
+		- src/
+		- tests/
+	tmpDir: /tmp/phpstan

@@ -13,21 +13,30 @@ use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 
-class LateStaticReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
+class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
     private $class;
-    private $method;
 
-    public function __construct(string $class, string $method)
+    /** @var array<string, int> */
+    private $methods;
+
+    /**
+     * @param string $class
+     * @param array<string> $methods
+     */
+    private function __construct(string $class, array $methods)
     {
         $this->class = $class;
-        $this->method = $method;
+        $this->methods = array_flip($methods);
     }
 
-    public static function forMethod(string $classWithMethod): self
+    /**
+     * @param string $class
+     * @param array<string> $methods
+     */
+    public static function forMethods(string $class, array $methods): self
     {
-        [$class, $method] = explode('::', $classWithMethod);
-        return new self($class, $method);
+        return new self($class, $methods);
     }
 
     public function getClass(): string
@@ -37,7 +46,7 @@ class LateStaticReturnTypeExtension implements DynamicStaticMethodReturnTypeExte
 
     public function isStaticMethodSupported(MethodReflection $methodReflection): bool
     {
-        return $methodReflection->getName() === $this->method;
+        return array_key_exists($methodReflection->getName(), $this->methods);
     }
 
     public function getTypeFromStaticMethodCall(

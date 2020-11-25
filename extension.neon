@@ -1,41 +1,11 @@
 services:
 	-
-		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
-		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\ArrayList::fromEmpty')
+		class: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension::forMethods('Bonami\Collection\ArrayList', ['fromEmpty', 'of', 'fill', 'fromIterable'])
 		tags:
 			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
 	-
-		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
-		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\ArrayList::of')
-		tags:
-			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
-	-
-		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
-		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\ArrayList::fill')
-		tags:
-			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
-	-
-		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
-		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\ArrayList::fromIterable')
-		tags:
-			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
-	-
-		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
-		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\Map::fromAssociativeArray')
-		tags:
-			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
-	-
-		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
-		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\Map::fromOnly')
-		tags:
-			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
-	-
-		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
-		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\Map::fromEmpty')
-		tags:
-			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
-	-
-		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
-		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\Map::fromIterable')
+		class: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension::forMethods('Bonami\Collection\Map', ['fromAssociativeArray', 'fromOnly', 'fromEmpty', 'fromIterable'])
 		tags:
 			- phpstan.broker.dynamicStaticMethodReturnTypeExtension

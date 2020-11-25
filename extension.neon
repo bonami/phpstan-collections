@@ -19,3 +19,23 @@ services:
 		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\ArrayList::fromIterable')
 		tags:
 			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+	-
+		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\Map::fromAssociativeArray')
+		tags:
+			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+	-
+		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\Map::fromOnly')
+		tags:
+			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+	-
+		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\Map::fromEmpty')
+		tags:
+			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+	-
+		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\Map::fromIterable')
+		tags:
+			- phpstan.broker.dynamicStaticMethodReturnTypeExtension

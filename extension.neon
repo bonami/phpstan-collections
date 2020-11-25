@@ -5,7 +5,17 @@ services:
 		tags:
 			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
 	-
+		class: Bonami\Collection\Phpstan\LateStaticBindingMethodReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticBindingMethodReturnTypeExtension::forMethods('Bonami\Collection\ArrayList', ['uniqueBy', 'unique', 'union', 'filter', 'sort', 'take', 'slice', 'withoutNulls', 'minus', 'minusOne', 'concat', 'intersect', 'reverse'])
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+	-
 		class: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension
 		factory: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension::forMethods('Bonami\Collection\Map', ['fromAssociativeArray', 'fromOnly', 'fromEmpty', 'fromIterable'])
 		tags:
 			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+	-
+		class: Bonami\Collection\Phpstan\LateStaticBindingMethodReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticBindingMethodReturnTypeExtension::forMethods('Bonami\Collection\Map', ['concat', 'minus', 'filter', 'filterKeys', 'take', 'withoutNulls', 'withoutKeys', 'withoutKey', 'sortKeys', 'getByKeys', 'sortValues'])
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension

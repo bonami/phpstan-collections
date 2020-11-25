@@ -1,0 +1,21 @@
+services:
+	-
+		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\ArrayList::fromEmpty')
+		tags:
+			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+	-
+		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\ArrayList::of')
+		tags:
+			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+	-
+		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\ArrayList::fill')
+		tags:
+			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+	-
+		class: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticReturnTypeExtension::forMethod('Bonami\Collection\ArrayList::fromIterable')
+		tags:
+			- phpstan.broker.dynamicStaticMethodReturnTypeExtension

@@ -19,3 +19,13 @@ services:
 		factory: Bonami\Collection\Phpstan\LateStaticBindingMethodReturnTypeExtension::forMethods('Bonami\Collection\Map', ['concat', 'minus', 'filter', 'filterKeys', 'take', 'withoutNulls', 'withoutKeys', 'withoutKey', 'sortKeys', 'getByKeys', 'sortValues'])
 		tags:
 			- phpstan.broker.dynamicMethodReturnTypeExtension
+	-
+		class: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension::forMethods('Bonami\Collection\LazyList', ['fill', 'fromEmpty', 'fromArray', 'fromTraversable', 'fromIterable', 'of'])
+		tags:
+			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
+	-
+		class: Bonami\Collection\Phpstan\LateStaticBindingMethodReturnTypeExtension
+		factory: Bonami\Collection\Phpstan\LateStaticBindingMethodReturnTypeExtension::forMethods('Bonami\Collection\LazyList', ['take', 'filter', 'dropWhile', 'drop', 'concat', 'add', 'insertOnPosition'])
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension

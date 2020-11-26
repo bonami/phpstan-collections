@@ -4,17 +4,10 @@ declare(strict_types=1);
 
 namespace Bonami\Collection\Phpstan;
 
-use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\MethodCall;
-use PhpParser\Node\Expr\StaticCall;
-use PhpParser\Node\Expr\Variable;
-use PhpParser\Node\Identifier;
-use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
-use PHPStan\Type\Generic\GenericObjectType;
-use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 
 class LateStaticBindingMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
@@ -58,25 +51,6 @@ class LateStaticBindingMethodReturnTypeExtension implements DynamicMethodReturnT
         MethodCall $methodCall,
         Scope $scope
     ): Type {
-
-        $var = $methodCall->var;
-
-        if ($var instanceof Variable && is_string($var->name)) {
-            return $scope->getVariableType($var->name);
-        }
-
-        assert($var instanceof StaticCall && $var->class instanceof Name);
-
-        $calledClass = $var->class->toString();
-
-        $calledOnTopLevelParent = in_array($calledClass, ['self', $this->class]);
-
-        $declaringClassReflection = $methodReflection->getDeclaringClass();
-        return $calledOnTopLevelParent
-            ? new GenericObjectType(
-                $declaringClassReflection->getName(),
-                $declaringClassReflection->typeMapToList($declaringClassReflection->getActiveTemplateTypeMap())
-            )
-            : new ObjectType($calledClass);
+        return $scope->getType($methodCall->var);
     }
 }

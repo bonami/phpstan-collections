@@ -1,6 +1,6 @@
 {
   "name": "bonami/phpstan-collections",
-  "type": "library",
+  "type": "phpstan-extension",
   "description": "Phpstan extension for bonami/collections library",
   "license": "MIT",
   "authors": [
@@ -27,6 +27,11 @@
   "extra": {
     "branch-alias": {
       "dev-master": "0.1.x-dev"
+    },
+    "phpstan": {
+      "includes": [
+        "extension.neon"
+      ]
     }
   },
   "autoload": {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bonami\Collection\Phpstan;
 
 use Bonami\Collection\ArrayList;
+use Bonami\Collection\Map;
 use PHPUnit\Framework\TestCase;
 
 class ArrayListTest extends TestCase
@@ -206,12 +207,42 @@ class ArrayListTest extends TestCase
         self::assertInstanceOf(FooArrayList::class, $concreteList);
     }
 
+    public function testGroupByType(): void
+    {
+        $id = static function (Foo $i): Foo {
+            return $i;
+        };
+        ArrayList::fromIterable([new Foo()])->groupBy($id);
+        /** @var ArrayList<Foo> $genericList */
+        $genericList = ArrayList::fromIterable([new Foo()]);
+        $this->requireMapArrayListByFoo($genericList->groupBy($id));
+        $this->requireMapArrayListByFoo($genericList->groupBy(static function (Foo $i): Foo {
+            return $i;
+        }));
+        self::assertInstanceOf(Map::class, $genericList->groupBy($id));
+
+        FooArrayList::fromIterable([new Foo()])->groupBy($id);
+        $concreteList = FooArrayList::fromIterable([new Foo()]);
+        $this->requireMapFooArrayListByFoo($concreteList->groupBy($id));
+        self::assertInstanceOf(Map::class, $concreteList->groupBy($id));
+    }
+
     /** @phpstan-param ArrayList<Foo> $list */
     public function requireArrayListOfFoo(ArrayList $list): void
     {
     }
 
     public function requireFooList(FooArrayList $list): void
+    {
+    }
+
+    /** @phpstan-param Map<Foo, ArrayList<Foo>> $list */
+    public function requireMapArrayListByFoo(Map $list): void
+    {
+    }
+
+    /** @phpstan-param Map<Foo, FooArrayList> $list */
+    public function requireMapFooArrayListByFoo(Map $list): void
     {
     }
 }

@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Bonami\Collection\Phpstan;
+
+use Bonami\Collection\Map;
+use PhpParser\Node\Expr\MethodCall;
+use PHPStan\Analyser\Scope;
+use PHPStan\Reflection\MethodReflection;
+use PHPStan\Type\ClosureType;
+use PHPStan\Type\DynamicMethodReturnTypeExtension;
+use PHPStan\Type\Generic\GenericObjectType;
+use PHPStan\Type\Type;
+
+class GroupByMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
+{
+    private $class;
+
+    public function __construct(string $class)
+    {
+        $this->class = $class;
+    }
+
+    public function getClass(): string
+    {
+        return $this->class;
+    }
+
+    public function isMethodSupported(MethodReflection $methodReflection): bool
+    {
+        return $methodReflection->getName() === 'groupBy';
+    }
+
+    public function getTypeFromMethodCall(
+        MethodReflection $methodReflection,
+        MethodCall $methodCall,
+        Scope $scope
+    ): Type {
+        $closure = $scope->getType($methodCall->args[0]->value);
+        assert($closure instanceof ClosureType);
+
+        return new GenericObjectType(
+            Map::class,
+            [
+                $closure->getReturnType(),
+                $scope->getType($methodCall->var),
+            ]
+        );
+    }
+}

@@ -11,6 +11,7 @@ use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\ClosureType;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\Generic\GenericObjectType;
+use PHPStan\Type\ThisType;
 use PHPStan\Type\Type;
 
 class GroupByMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
@@ -40,11 +41,13 @@ class GroupByMethodReturnTypeExtension implements DynamicMethodReturnTypeExtensi
         $closure = $scope->getType($methodCall->args[0]->value);
         assert($closure instanceof ClosureType);
 
+        $listType = $scope->getType($methodCall->var);
+
         return new GenericObjectType(
             Map::class,
             [
                 $closure->getReturnType(),
-                $scope->getType($methodCall->var),
+                $listType instanceof ThisType ? $listType->getStaticObjectType() : $listType,
             ]
         );
     }

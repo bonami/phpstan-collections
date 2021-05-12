@@ -8,6 +8,7 @@ use Bonami\Collection\Map;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
+use PHPStan\Type\CallableType;
 use PHPStan\Type\ClosureType;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\Generic\GenericObjectType;
@@ -39,7 +40,7 @@ class GroupByMethodReturnTypeExtension implements DynamicMethodReturnTypeExtensi
         Scope $scope
     ): Type {
         $closure = $scope->getType($methodCall->args[0]->value);
-        assert($closure instanceof ClosureType);
+        assert($closure instanceof ClosureType || $closure instanceof CallableType);
 
         $listType = $scope->getType($methodCall->var);
 

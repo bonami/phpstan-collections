@@ -10,4 +10,10 @@ use Bonami\Collection\Map;
 class FooMap extends Map
 {
 
+    public function filterNothing(): self
+    {
+        return self::fromIterable($this->filter(static function (Foo $foo, int $i): bool {
+            return true;
+        }));
+    }
 }

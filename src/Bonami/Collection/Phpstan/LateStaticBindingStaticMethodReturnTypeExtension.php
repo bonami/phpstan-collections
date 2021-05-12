@@ -57,13 +57,26 @@ class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticM
         $declaringClassReflection = $methodReflection->getDeclaringClass();
         $calledClassExpr = $methodCall->class;
         assert($calledClassExpr instanceof Name);
-        $calledOnTopLevelParent = in_array($calledClassExpr->toString(), ['self', $this->class]);
+        $calledClassExprString = $calledClassExpr->toString();
+        $calledOnTopLevelParent = $calledClassExprString === $this->class
+            || ($calledClassExprString === 'self'
+                && $scope->getClassReflection() !== null
+                && $scope->getClassReflection()->getName() === $this->class
+            );
 
-        return $calledOnTopLevelParent
-            ? new GenericObjectType(
+        if ($calledOnTopLevelParent) {
+            return new GenericObjectType(
                 $declaringClassReflection->getName(),
                 $declaringClassReflection->typeMapToList($declaringClassReflection->getActiveTemplateTypeMap())
-            )
-            : new ObjectType($calledClassExpr->toString());
+            );
+        }
+
+        $calledInsideExtendedClass = $calledClassExprString === 'self';
+        if ($calledInsideExtendedClass) {
+            assert($scope->getClassReflection() !== null);
+            return new ObjectType($scope->getClassReflection()->getName());
+        }
+
+        return new ObjectType($calledClassExprString);
     }
 }

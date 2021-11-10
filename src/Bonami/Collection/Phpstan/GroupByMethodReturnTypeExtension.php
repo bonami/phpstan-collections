@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bonami\Collection\Phpstan;
 
 use Bonami\Collection\Map;
+use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
@@ -39,7 +40,9 @@ class GroupByMethodReturnTypeExtension implements DynamicMethodReturnTypeExtensi
         MethodCall $methodCall,
         Scope $scope
     ): Type {
-        $closure = $scope->getType($methodCall->args[0]->value);
+        $arg = $methodCall->args[0];
+        assert($arg instanceof Arg);
+        $closure = $scope->getType($arg->value);
         assert($closure instanceof ClosureType || $closure instanceof CallableType);
 
         $listType = $scope->getType($methodCall->var);

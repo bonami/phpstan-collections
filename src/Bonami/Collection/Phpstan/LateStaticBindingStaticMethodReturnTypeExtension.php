@@ -59,7 +59,7 @@ class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticM
         assert($calledClassExpr instanceof Name);
         $calledClassExprString = $calledClassExpr->toString();
         $calledOnTopLevelParent = $calledClassExprString === $this->class
-            || ($calledClassExprString === 'self'
+            || (in_array($calledClassExprString, ['self', 'static'], true)
                 && $scope->getClassReflection() !== null
                 && $scope->getClassReflection()->getName() === $this->class
             );

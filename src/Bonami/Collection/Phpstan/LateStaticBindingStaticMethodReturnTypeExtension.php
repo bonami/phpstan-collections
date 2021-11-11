@@ -67,7 +67,9 @@ class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticM
         if ($calledOnTopLevelParent) {
             return new GenericObjectType(
                 $declaringClassReflection->getName(),
-                $declaringClassReflection->typeMapToList($declaringClassReflection->getActiveTemplateTypeMap())
+                $declaringClassReflection->typeMapToList(
+                    $declaringClassReflection->getTemplateTypeMap()->resolveToBounds()
+                )
             );
         }
 

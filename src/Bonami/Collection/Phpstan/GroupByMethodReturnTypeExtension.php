@@ -18,6 +18,7 @@ use PHPStan\Type\Type;
 
 class GroupByMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
+    /** @var string */
     private $class;
 
     public function __construct(string $class)

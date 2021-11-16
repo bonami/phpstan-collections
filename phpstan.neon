@@ -1,7 +1,6 @@
 includes:
     - extension.neon
 parameters:
-    inferPrivatePropertyTypeFromConstructor: true
     reportUnmatchedIgnoredErrors: true
     level: 9
     paths:

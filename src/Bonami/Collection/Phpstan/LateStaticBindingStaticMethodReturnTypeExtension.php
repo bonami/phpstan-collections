@@ -15,6 +15,7 @@ use PHPStan\Type\Type;
 
 class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
+    /** @var string */
     private $class;
 
     /** @var array<string, int> */

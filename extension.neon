@@ -1,5 +1,9 @@
 services:
 	-
+		class: Bonami\Collection\Phpstan\ArrayListWithoutNullsReturnTypeExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+	-
 		class: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension
 		factory: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension::forMethods('Bonami\Collection\ArrayList', ['fromEmpty', 'of', 'fill', 'fromIterable'])
 		tags:

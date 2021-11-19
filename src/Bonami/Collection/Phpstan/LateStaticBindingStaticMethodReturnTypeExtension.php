@@ -15,6 +15,7 @@ use PHPStan\Type\Type;
 
 class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
+    /** @var string */
     private $class;
 
     /** @var array<string, int> */
@@ -59,7 +60,7 @@ class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticM
         assert($calledClassExpr instanceof Name);
         $calledClassExprString = $calledClassExpr->toString();
         $calledOnTopLevelParent = $calledClassExprString === $this->class
-            || ($calledClassExprString === 'self'
+            || (in_array($calledClassExprString, ['self', 'static'], true)
                 && $scope->getClassReflection() !== null
                 && $scope->getClassReflection()->getName() === $this->class
             );
@@ -67,7 +68,9 @@ class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticM
         if ($calledOnTopLevelParent) {
             return new GenericObjectType(
                 $declaringClassReflection->getName(),
-                $declaringClassReflection->typeMapToList($declaringClassReflection->getActiveTemplateTypeMap())
+                $declaringClassReflection->typeMapToList(
+                    $declaringClassReflection->getTemplateTypeMap()->resolveToBounds()
+                )
             );
         }
 

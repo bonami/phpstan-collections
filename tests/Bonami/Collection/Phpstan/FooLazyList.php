@@ -9,5 +9,4 @@ use Bonami\Collection\LazyList;
 /** @phpstan-extends LazyList<Foo> */
 class FooLazyList extends LazyList
 {
-
 }

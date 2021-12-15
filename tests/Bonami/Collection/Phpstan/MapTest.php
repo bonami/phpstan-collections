@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class MapTest extends TestCase
 {
-
     public function testFromAssociativeArrayReturnType(): void
     {
         $genericList = Map::fromAssociativeArray([1 => new Foo()]);

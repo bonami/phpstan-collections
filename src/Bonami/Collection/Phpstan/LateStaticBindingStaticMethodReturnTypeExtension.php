@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Bonami\Collection\Phpstan;
 
+use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\DynamicStaticMethodReturnTypeExtension;
+use PHPStan\Type\Generic\GenericClassStringType;
 use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
@@ -57,6 +59,13 @@ class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticM
     ): Type {
         $declaringClassReflection = $methodReflection->getDeclaringClass();
         $calledClassExpr = $methodCall->class;
+        if ($calledClassExpr instanceof PropertyFetch) {
+            $type = $scope->getType($calledClassExpr);
+            if ($type instanceof GenericClassStringType) {
+                return $type->getGenericType();
+            }
+        }
+
         assert($calledClassExpr instanceof Name);
         $calledClassExprString = $calledClassExpr->toString();
         $calledOnTopLevelParent = $calledClassExprString === $this->class

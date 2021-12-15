@@ -10,7 +10,6 @@ use Bonami\Collection\Map;
 /** @phpstan-extends ArrayList<Foo> */
 class FooArrayList extends ArrayList
 {
-
     /** @return Map<Foo, self> */
     public function groupByFoo(): Map
     {

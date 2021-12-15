@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class LazyListTest extends TestCase
 {
-
     public function testFillReturnType(): void
     {
         $genericList = LazyList::fill(new Foo());

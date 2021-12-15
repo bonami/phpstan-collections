@@ -15,7 +15,6 @@ use PHPStan\Type\TypeCombinator;
 
 class ArrayListWithoutNullsReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
-
     public function getClass(): string
     {
         return ArrayList::class;

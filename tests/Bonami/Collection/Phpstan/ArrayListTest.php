@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayListTest extends TestCase
 {
-
     public function testFromEmptyReturnType(): void
     {
         $genericList = ArrayList::fromEmpty();

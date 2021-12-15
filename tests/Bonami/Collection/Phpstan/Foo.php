@@ -6,5 +6,4 @@ namespace Bonami\Collection\Phpstan;
 
 class Foo
 {
-
 }

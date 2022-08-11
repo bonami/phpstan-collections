@@ -22,7 +22,11 @@
     "bonami/collections": "^0.3.8"
   },
   "config": {
-    "bin-dir": "bin"
+    "bin-dir": "bin",
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ergebnis/composer-normalize": true
+    }
   },
   "extra": {
     "branch-alias": {

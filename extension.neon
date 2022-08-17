@@ -25,7 +25,7 @@ services:
 			- phpstan.broker.dynamicMethodReturnTypeExtension
 	-
 		class: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension
-		factory: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension::forMethods('Bonami\Collection\LazyList', ['fill', 'fromEmpty', 'fromArray', 'fromIterable', 'of'])
+		factory: Bonami\Collection\Phpstan\LateStaticBindingStaticMethodReturnTypeExtension::forMethods('Bonami\Collection\LazyList', ['fill', 'fromEmpty', 'fromIterable', 'of'])
 		tags:
 			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
 	-

@@ -32,17 +32,6 @@ class LazyListTest extends TestCase
         self::assertInstanceOf(FooLazyList::class, $concreteList);
     }
 
-    public function testFromArrayReturnType(): void
-    {
-        $genericList = LazyList::fromArray();
-        $this->requireLazyListOfFoo($genericList);
-        self::assertInstanceOf(LazyList::class, $genericList);
-
-        $concreteList = FooLazyList::fromArray([new Foo()]);
-        $this->requireFooList($concreteList);
-        self::assertInstanceOf(FooLazyList::class, $concreteList);
-    }
-
     public function testFromIterableReturnType(): void
     {
         $genericList = LazyList::fromIterable([new Foo()]);

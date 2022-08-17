@@ -3,7 +3,7 @@
 all: deps test
 
 deps:
-	docker run -it --rm -v ${PWD}:/app -w /app composer update --prefer-dist --verbose --no-interaction --optimize-autoloader
+	docker run -it --rm -v ${PWD}:/app -w /app composer update --prefer-dist --verbose --no-interaction
 
 test:
 	$(MAKE) phpunit
@@ -12,6 +12,9 @@ test:
 
 phpstan:
 	docker run -it --rm -v ${PWD}:/app -w /app php:7.3-cli-alpine php -d error_reporting=-1 -d memory_limit=-1 bin/phpstan --ansi analyse
+
+phpstan-clear-cache:
+	docker run -it --rm -v ${PWD}:/app -w /app php:7.3-cli-alpine php -d error_reporting=-1 -d memory_limit=-1 bin/phpstan --ansi clear-result-cache
 
 phpunit:
 	docker run -it --rm -v ${PWD}:/app -w /app php:7.3-cli-alpine php -d error_reporting=-1 bin/phpunit --colors=always -c phpunit.xml

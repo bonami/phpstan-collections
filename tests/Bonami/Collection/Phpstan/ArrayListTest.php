@@ -8,10 +8,13 @@ use Bonami\Collection\ArrayList;
 use Bonami\Collection\Map;
 use PHPUnit\Framework\TestCase;
 
+use function PHPStan\dumpType;
+
 class ArrayListTest extends TestCase
 {
     public function testFromEmptyReturnType(): void
     {
+        /** @var ArrayList<Foo> $genericList */
         $genericList = ArrayList::fromEmpty();
         $this->requireArrayListOfFoo($genericList);
         self::assertInstanceOf(ArrayList::class, $genericList);
@@ -137,21 +140,6 @@ class ArrayListTest extends TestCase
 
         $concreteList = FooArrayList::fromIterable([new Foo()])->slice(0, 1);
         $this->requireFooList($concreteList->slice(0, 1));
-        self::assertInstanceOf(FooArrayList::class, $concreteList);
-    }
-
-    public function testWithoutNullsReturnType(): void
-    {
-        /** @var iterable<int, Foo|null> $iterable */
-        $iterable = [new Foo(), null];
-        /** @var ArrayList<Foo|null> $list */
-        $list = ArrayList::fromIterable($iterable);
-        $genericList = $list->withoutNulls();
-        $this->requireArrayListOfFoo($genericList->withoutNulls());
-        self::assertInstanceOf(ArrayList::class, $genericList);
-
-        $concreteList = FooArrayList::fromIterable($genericList)->withoutNulls();
-        $this->requireFooList($concreteList->withoutNulls());
         self::assertInstanceOf(FooArrayList::class, $concreteList);
     }
 

@@ -23,22 +23,12 @@ class LazyListTest extends TestCase
 
     public function testFromEmptyReturnType(): void
     {
+        /** @var LazyList<Foo> $genericList */
         $genericList = LazyList::fromEmpty();
         $this->requireLazyListOfFoo($genericList);
         self::assertInstanceOf(LazyList::class, $genericList);
 
         $concreteList = FooLazyList::fromEmpty();
-        $this->requireFooList($concreteList);
-        self::assertInstanceOf(FooLazyList::class, $concreteList);
-    }
-
-    public function testFromArrayReturnType(): void
-    {
-        $genericList = LazyList::fromArray();
-        $this->requireLazyListOfFoo($genericList);
-        self::assertInstanceOf(LazyList::class, $genericList);
-
-        $concreteList = FooLazyList::fromArray([new Foo()]);
         $this->requireFooList($concreteList);
         self::assertInstanceOf(FooLazyList::class, $concreteList);
     }

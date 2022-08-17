@@ -157,6 +157,33 @@ class ArrayListTest extends TestCase
         self::assertInstanceOf(FooArrayList::class, $concreteList);
     }
 
+    public function testItShouldFilterNullsFromGenericType(): void
+    {
+        $withNulls = ArrayList::fromIterable([new Foo(), null]);
+        $withoutNulls = $withNulls->filter(static function (?Foo $foo): bool {
+            return $foo !== null;
+        });
+        $this->requireArrayListOfFoo($withoutNulls);
+        $this->requireArrayListOfFoo($withNulls->filter(static function (?Foo $foo): bool {
+            return $foo !== null;
+        }));
+        $this->requireArrayListOfFoo($withNulls->filter(static fn (?Foo $foo): bool => $foo !== null));
+        self::assertInstanceOf(ArrayList::class, $withoutNulls);
+
+        $fooList = FooArrayList::fromIterable([new Foo(), null])
+            ->filter(static fn (?Foo $foo) => $foo !== null);
+
+        $this->requireFooList($fooList);
+    }
+
+    public function testItShouldFilterTypesFromUnions(): void
+    {
+        $intsAndStrings = ArrayList::fromIterable([1, 'string']);
+        $this->requireIntsAndStrings($intsAndStrings);
+        $this->requireInts($intsAndStrings->filter(fn ($x) => is_int($x)));
+        $this->requireStrings($intsAndStrings->filter(fn ($x) => !is_int($x)));
+    }
+
     public function testMinusReturnType(): void
     {
         $genericList = ArrayList::fromIterable([new Foo()])->minus([new Foo()]);
@@ -248,6 +275,21 @@ class ArrayListTest extends TestCase
 
     /** @phpstan-param Map<Foo, FooArrayList> $list */
     public function requireMapFooArrayListByFoo(Map $list): void
+    {
+    }
+
+    /** @param ArrayList<int|string> $intsAndStrings */
+    private function requireIntsAndStrings(ArrayList $intsAndStrings): void
+    {
+    }
+
+    /** @param ArrayList<int> $intsAndStrings */
+    private function requireInts(ArrayList $intsAndStrings): void
+    {
+    }
+
+    /** @param ArrayList<string> $intsAndStrings */
+    private function requireStrings(ArrayList $intsAndStrings): void
     {
     }
 }

@@ -79,6 +79,25 @@ class LazyListTest extends TestCase
         self::assertInstanceOf(FooLazyList::class, $concreteList);
     }
 
+    public function testItShouldNarrowTypesAfterFilter(): void
+    {
+        $withNulls = LazyList::fromIterable([new Foo(), null]);
+        $withoutNulls = $withNulls->filter(static function (?Foo $foo): bool {
+            return $foo !== null;
+        });
+        $this->requireLazyListOfFoo($withoutNulls);
+        $this->requireLazyListOfFoo($withNulls->filter(static function (?Foo $foo): bool {
+            return $foo !== null;
+        }));
+        $this->requireLazyListOfFoo($withNulls->filter(static fn (?Foo $foo): bool => $foo !== null));
+        self::assertInstanceOf(LazyList::class, $withoutNulls);
+
+        $fooList = FooLazyList::fromIterable([new Foo(), null])
+            ->filter(static fn (?Foo $foo) => $foo !== null);
+
+        $this->requireFooList($fooList);
+    }
+
     public function testDropWhileReturnType(): void
     {
         $tautology = static function () {

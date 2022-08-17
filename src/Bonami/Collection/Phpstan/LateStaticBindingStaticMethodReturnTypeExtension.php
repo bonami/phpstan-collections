@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace Bonami\Collection\Phpstan;
 
-use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
-use PHPStan\Type\ConstantType;
+use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Type\DynamicStaticMethodReturnTypeExtension;
-use PHPStan\Type\GeneralizePrecision;
 use PHPStan\Type\Generic\GenericClassStringType;
-use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 
@@ -60,7 +57,6 @@ class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticM
         StaticCall $methodCall,
         Scope $scope
     ): Type {
-        $declaringClassReflection = $methodReflection->getDeclaringClass();
         $calledClassExpr = $methodCall->class;
         if ($calledClassExpr instanceof PropertyFetch) {
             $type = $scope->getType($calledClassExpr);
@@ -78,26 +74,11 @@ class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticM
             );
 
         if ($calledOnTopLevelParent) {
-            if ($methodReflection->getName() === 'of') {
-                $arg = $methodCall->getArgs()[0];
-                assert($arg instanceof Arg);
-
-                $type = $scope->getType($arg->value);
-                $widend = $type instanceof ConstantType
-                    ? $type->generalize(GeneralizePrecision::lessSpecific())
-                    : $type;
-
-                return new GenericObjectType(
-                    $declaringClassReflection->getName(),
-                    [$widend]
-                );
-            }
-            return new GenericObjectType(
-                $declaringClassReflection->getName(),
-                $declaringClassReflection->typeMapToList(
-                    $declaringClassReflection->getTemplateTypeMap()->resolveToBounds()
-                )
-            );
+            return ParametersAcceptorSelector::selectFromArgs(
+                $scope,
+                $methodCall->getArgs(),
+                $methodReflection->getVariants()
+            )->getReturnType();
         }
 
         $calledInsideExtendedClass = $calledClassExprString === 'self';

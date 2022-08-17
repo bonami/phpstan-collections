@@ -8,10 +8,13 @@ use Bonami\Collection\ArrayList;
 use Bonami\Collection\Map;
 use PHPUnit\Framework\TestCase;
 
+use function PHPStan\dumpType;
+
 class ArrayListTest extends TestCase
 {
     public function testFromEmptyReturnType(): void
     {
+        /** @var ArrayList<Foo> $genericList */
         $genericList = ArrayList::fromEmpty();
         $this->requireArrayListOfFoo($genericList);
         self::assertInstanceOf(ArrayList::class, $genericList);

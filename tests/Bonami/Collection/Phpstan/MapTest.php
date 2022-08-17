@@ -33,6 +33,7 @@ class MapTest extends TestCase
 
     public function testFromEmptyReturnType(): void
     {
+        /** @var Map<int, Foo> $genericList */
         $genericList = Map::fromEmpty();
         $this->requireMapOfFoo($genericList);
         self::assertInstanceOf(Map::class, $genericList);

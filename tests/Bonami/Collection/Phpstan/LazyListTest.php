@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Bonami\Collection\Phpstan;
 
-use ArrayIterator;
 use Bonami\Collection\LazyList;
 use PHPUnit\Framework\TestCase;
 

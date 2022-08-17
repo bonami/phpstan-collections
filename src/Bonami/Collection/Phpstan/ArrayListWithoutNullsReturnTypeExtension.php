@@ -36,15 +36,9 @@ class ArrayListWithoutNullsReturnTypeExtension implements DynamicMethodReturnTyp
         $referencedClasses = $type->getReferencedClasses();
 
         if (in_array(ArrayList::class, $referencedClasses, true)) {
-            $types = $declaringClassReflection->typeMapToList(
-                $declaringClassReflection->getTemplateTypeMap()->resolveToBounds()
-            );
-
             return new GenericObjectType(
                 $declaringClassReflection->getName(),
-                array_map(static function (Type $type) {
-                    return TypeCombinator::removeNull($type);
-                }, $types)
+                [TypeCombinator::removeNull($type->getIterableValueType())]
             );
         }
 

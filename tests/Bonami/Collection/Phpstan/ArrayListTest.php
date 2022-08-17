@@ -143,6 +143,20 @@ class ArrayListTest extends TestCase
         self::assertInstanceOf(FooArrayList::class, $concreteList);
     }
 
+    public function testWithoutNullsReturnType(): void
+    {
+        $iterable = [new Foo(), null];
+        $list = ArrayList::fromIterable($iterable);
+        $genericList = $list->withoutNulls();
+        $this->requireArrayListOfFoo($genericList);
+        $this->requireArrayListOfFoo($list->withoutNulls());
+        self::assertInstanceOf(ArrayList::class, $genericList);
+
+        $concreteList = FooArrayList::fromIterable($genericList)->withoutNulls();
+        $this->requireFooList($concreteList->withoutNulls());
+        self::assertInstanceOf(FooArrayList::class, $concreteList);
+    }
+
     public function testMinusReturnType(): void
     {
         $genericList = ArrayList::fromIterable([new Foo()])->minus([new Foo()]);

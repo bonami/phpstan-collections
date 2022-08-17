@@ -10,7 +10,7 @@ services:
 			- phpstan.broker.dynamicStaticMethodReturnTypeExtension
 	-
 		class: Bonami\Collection\Phpstan\LateStaticBindingMethodReturnTypeExtension
-		factory: Bonami\Collection\Phpstan\LateStaticBindingMethodReturnTypeExtension::forMethods('Bonami\Collection\ArrayList', ['uniqueBy', 'unique', 'union', 'filter', 'sort', 'take', 'slice', 'withoutNulls', 'minus', 'minusOne', 'concat', 'intersect', 'reverse'])
+		factory: Bonami\Collection\Phpstan\LateStaticBindingMethodReturnTypeExtension::forMethods('Bonami\Collection\ArrayList', ['uniqueBy', 'unique', 'union', 'filter', 'sort', 'take', 'slice', 'minus', 'minusOne', 'concat', 'intersect', 'reverse'])
 		tags:
 			- phpstan.broker.dynamicMethodReturnTypeExtension
 	-

@@ -23,6 +23,7 @@ class LazyListTest extends TestCase
 
     public function testFromEmptyReturnType(): void
     {
+        /** @var LazyList<Foo> $genericList */
         $genericList = LazyList::fromEmpty();
         $this->requireLazyListOfFoo($genericList);
         self::assertInstanceOf(LazyList::class, $genericList);

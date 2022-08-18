@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": ">=7.3|^8.0",
+    "php": ">=7.4|^8.0",
     "phpstan/phpstan": "^1.0"
   },
   "require-dev": {
@@ -30,7 +30,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.4.x-dev"
+      "dev-master": "0.5.x-dev"
     },
     "phpstan": {
       "includes": [

@@ -117,11 +117,11 @@ class MapTest extends TestCase
 
     public function testWithoutNullsReturnType(): void
     {
-        $genericList = Map::fromIterable([[1, new Foo()]])->withoutNulls();
+        $genericList = Map::fromIterable([[1, new Foo()], [2, null]])->withoutNulls();
         $this->requireMapOfFoo($genericList->withoutNulls());
         self::assertInstanceOf(Map::class, $genericList);
 
-        $concreteList = FooMap::fromIterable([[1, new Foo()]])->withoutNulls();
+        $concreteList = FooMap::fromIterable([[1, new Foo()], [2, null]])->withoutNulls();
         $this->requireFooList($concreteList->withoutNulls());
         self::assertInstanceOf(FooMap::class, $concreteList);
     }

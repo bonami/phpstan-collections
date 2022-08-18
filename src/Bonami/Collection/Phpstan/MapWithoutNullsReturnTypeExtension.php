@@ -32,12 +32,10 @@ class MapWithoutNullsReturnTypeExtension implements DynamicMethodReturnTypeExten
     ): Type {
         $type = $scope->getType($methodCall->var);
 
-        $declaringClassReflection = $methodReflection->getDeclaringClass();
-
-        if ($type instanceof GenericObjectType) {
+        if ($type instanceof GenericObjectType && $type->getClassReflection() !== null) {
             [$keyType, $valueType] = $type->getTypes();
             return new GenericObjectType(
-                $declaringClassReflection->getName(),
+                $type->getClassReflection()->getName(),
                 [$keyType, TypeCombinator::removeNull($valueType)]
             );
         }

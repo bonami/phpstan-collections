@@ -32,12 +32,9 @@ class ArrayListWithoutNullsReturnTypeExtension implements DynamicMethodReturnTyp
     ): Type {
         $type = $scope->getType($methodCall->var);
 
-        $declaringClassReflection = $methodReflection->getDeclaringClass();
-        $referencedClasses = $type->getReferencedClasses();
-
-        if (in_array(ArrayList::class, $referencedClasses, true)) {
+        if ($type instanceof GenericObjectType && $type->getClassReflection() !== null) {
             return new GenericObjectType(
-                $declaringClassReflection->getName(),
+                $type->getClassReflection()->getName(),
                 [TypeCombinator::removeNull($type->getIterableValueType())]
             );
         }

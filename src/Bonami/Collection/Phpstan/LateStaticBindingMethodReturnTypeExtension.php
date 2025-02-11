@@ -12,14 +12,14 @@ use PHPStan\Type\Type;
 
 class LateStaticBindingMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
-    /** @var string */
-    private $class;
+    /** @var class-string */
+    private string $class;
 
     /** @var array<string, int> */
-    private $methods;
+    private array $methods;
 
     /**
-     * @param string $class
+     * @param class-string $class
      * @param array<string> $methods
      */
     private function __construct(string $class, array $methods)
@@ -29,7 +29,7 @@ class LateStaticBindingMethodReturnTypeExtension implements DynamicMethodReturnT
     }
 
     /**
-     * @param string $class
+     * @param class-string $class
      * @param array<string> $methods
      */
     public static function forMethods(string $class, array $methods): self

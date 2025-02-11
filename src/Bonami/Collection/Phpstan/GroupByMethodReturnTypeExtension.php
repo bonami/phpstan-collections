@@ -9,7 +9,6 @@ use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
-use PHPStan\Type\CallableType;
 use PHPStan\Type\ClosureType;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\Generic\GenericObjectType;
@@ -18,9 +17,10 @@ use PHPStan\Type\Type;
 
 class GroupByMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
-    /** @var string */
-    private $class;
+    /** @var class-string */
+    private string $class;
 
+    /** @param class-string $class */
     public function __construct(string $class)
     {
         $this->class = $class;
@@ -43,8 +43,9 @@ class GroupByMethodReturnTypeExtension implements DynamicMethodReturnTypeExtensi
     ): Type {
         $arg = $methodCall->args[0];
         assert($arg instanceof Arg);
+
         $closure = $scope->getType($arg->value);
-        assert($closure instanceof ClosureType || $closure instanceof CallableType);
+        assert($closure instanceof ClosureType);
 
         $listType = $scope->getType($methodCall->var);
 

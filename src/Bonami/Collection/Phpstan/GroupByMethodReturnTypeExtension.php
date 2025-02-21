@@ -43,8 +43,9 @@ class GroupByMethodReturnTypeExtension implements DynamicMethodReturnTypeExtensi
     ): Type {
         $arg = $methodCall->args[0];
         assert($arg instanceof Arg);
+
         $closure = $scope->getType($arg->value);
-        assert($closure instanceof ClosureType || $closure instanceof CallableType);
+        assert($closure instanceof ClosureType);
 
         $listType = $scope->getType($methodCall->var);
 

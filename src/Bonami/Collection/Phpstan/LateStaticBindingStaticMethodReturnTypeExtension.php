@@ -17,14 +17,14 @@ use PHPStan\Type\Type;
 
 class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
-    /** @var string */
-    private $class;
+    /** @var class-string */
+    private string $class;
 
     /** @var array<string, int> */
-    private $methods;
+    private array $methods;
 
     /**
-     * @param string $class
+     * @param class-string $class
      * @param array<string> $methods
      */
     private function __construct(string $class, array $methods)
@@ -34,7 +34,7 @@ class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticM
     }
 
     /**
-     * @param string $class
+     * @param class-string $class
      * @param array<string> $methods
      */
     public static function forMethods(string $class, array $methods): self
@@ -60,8 +60,8 @@ class LateStaticBindingStaticMethodReturnTypeExtension implements DynamicStaticM
         $calledClassExpr = $methodCall->class;
         if ($calledClassExpr instanceof PropertyFetch) {
             $type = $scope->getType($calledClassExpr);
-            if ($type instanceof GenericClassStringType) {
-                return $type->getGenericType();
+            if ($type->isClassString()->yes()) {
+                return $type->getClassStringObjectType();
             }
         }
 

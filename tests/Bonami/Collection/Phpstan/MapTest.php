@@ -187,7 +187,7 @@ class MapTest extends TestCase
         self::assertInstanceOf(FooMap::class, $concreteList);
     }
 
-    /** @phpstan-param Map<int, Foo> $list */
+    /** @phpstan-param Map<covariant int, Foo> $list */
     public function requireMapOfFoo(Map $list): void
     {
     }

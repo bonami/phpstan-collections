@@ -30,9 +30,10 @@ class IterableFilterTypeNarrowingExtension implements DynamicMethodReturnTypeExt
     /** @var TypeSpecifier */
     private $typeSpecifier;
 
-    /** @var string */
+    /** @var class-string */
     private $class;
 
+    /** @param class-string $class */
     public function __construct(string $class)
     {
         $this->class = $class;

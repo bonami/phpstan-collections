@@ -180,8 +180,13 @@ class ArrayListTest extends TestCase
     {
         $intsAndStrings = ArrayList::fromIterable([1, 'string']);
         $this->requireIntsAndStrings($intsAndStrings);
-        $this->requireInts($intsAndStrings->filter(fn ($x) => is_int($x)));
-        $this->requireStrings($intsAndStrings->filter(fn ($x) => !is_int($x)));
+        $ints = $intsAndStrings->filter(static fn($x) => is_int($x));
+        $strings = $intsAndStrings->filter(static fn($x) => !is_int($x));
+        $this->requireInts($ints);
+        $this->requireStrings($strings);
+
+        self::assertEquals([1], $ints->toArray());
+        self::assertEquals(['string'], $strings->toArray());
     }
 
     public function testMinusReturnType(): void

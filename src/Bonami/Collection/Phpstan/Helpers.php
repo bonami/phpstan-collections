@@ -16,10 +16,6 @@ class Helpers
             return $closure->expr;
         }
 
-        if (!($closure instanceof Expr\Closure)) {
-            return null;
-        }
-
         if (!isset($closure->stmts[0])) {
             return null;
         }
